@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LocationSelector from "../../components/LocationSelector";
-import "/home/rio/Documents/projects/DelieveryApp/global.css";
+import "../../global.css";
 
 const reorder = () => {
   const bottomSheetRef = useRef();

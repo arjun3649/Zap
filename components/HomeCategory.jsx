@@ -2,17 +2,13 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 
 export default function HomeCategory({ category }) {
-  // Flatten all subcategories from each category into a single array
-  const allSubCategories = category.flatMap((item) => item.subCategories);
-  console.log("====================================");
-  console.log(allSubCategories);
-  console.log("====================================");
+  const allSubCategories = category.subCategories;
+
 
   return (
     <View className="mb-1 mt-3">
       <Text className="text-xl font-bold px-4">Shop by category</Text>
 
-      {/* Render all subcategories in a single grid */}
       <View className="flex-row flex-wrap ">
         {allSubCategories.map((subCategory) => (
           <View

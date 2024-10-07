@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import RendersubCategories from "./RendersubCategories";
 
 const Category = ({ categories }) => {
+
   return (
     <View className="mb-5">
       {categories.map((category) => (

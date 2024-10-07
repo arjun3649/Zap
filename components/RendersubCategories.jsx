@@ -8,7 +8,7 @@ export default function RendersubCategories({ subCategories }) {
         <View
           key={subCategory.id}
           className="items-center mb-4"
-          style={{ width: "22%", margin: "1%", backgroundColor: "b4f1ff" }}
+          style={{ width: "22%", margin: "1%", backgroundColor: "#b4f1ff" }} 
         >
           <Image
             source={{

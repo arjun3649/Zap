@@ -1,12 +1,13 @@
+import { router } from "expo-router";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export default function HomeCategory({ category }) {
   // Flatten all subcategories from each category into a single array
   const allSubCategories = category.flatMap((item) => item.subCategories);
-  console.log("====================================");
-  console.log(allSubCategories);
-  console.log("====================================");
+  function handlepress(slug) {
+    router.push(`/products/${encodeURIComponent(slug)}`);
+  }
 
   return (
     <View className="mb-1 mt-3">
@@ -15,10 +16,11 @@ export default function HomeCategory({ category }) {
       {/* Render all subcategories in a single grid */}
       <View className="flex-row flex-wrap ">
         {allSubCategories.map((subCategory) => (
-          <View
+          <TouchableOpacity
             key={subCategory.id}
             className="items-center mb-4"
             style={{ width: "22%", margin: "1%" }}
+            onPress={() => handlepress(subCategory.slug)}
           >
             <Image
               source={{
@@ -27,7 +29,7 @@ export default function HomeCategory({ category }) {
               className="w-20 h-24 rounded-lg"
             />
             <Text className="text-center text-sm mt-2">{subCategory.name}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>

@@ -1,9 +1,12 @@
 import { View, Text, TouchableOpacity, Pressable } from "react-native";
-import React from 'react'
+import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-const AddressItem = ({ type, title, distance, address,handleclick }) => (
-  <Pressable className="flex-row items-center mb-4 bg-white rounded-lg shadow-sm" onPress={handleclick} >
+const AddressItem = ({ type, title, distance, address, handleclick }) => (
+  <Pressable
+    className="flex-row items-center mb-4 bg-white rounded-lg shadow-sm"
+    onPress={handleclick}
+  >
     <Ionicons name={type} size={24} color="#FFA500" className="m-2" />
     <View className="flex-1 m-2">
       <Text className="font-bold text-base">{title}</Text>
@@ -14,8 +17,7 @@ const AddressItem = ({ type, title, distance, address,handleclick }) => (
       <TouchableOpacity className="p-2">
         <Ionicons name="ellipsis-vertical" size={20} color="#888" />
       </TouchableOpacity>
-     
     </View>
   </Pressable>
 );
-export default AddressItem
+export default AddressItem;

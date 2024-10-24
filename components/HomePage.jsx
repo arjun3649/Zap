@@ -2,17 +2,17 @@ import React from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch, useSelector } from "react-redux";
-import Address from "../../components/Address";
-import Category from "../../components/Category";
-import LocationSelector from "../../components/LocationSelector";
-import "../../global.css";
-import { setAddress } from "../../Redux/addressSlice";
-import { data } from "../../Utils/Products";
+import { setAddress } from "../Redux/addressSlice";
+import { data } from "../Utils/Pro";
+import Address from "./Address";
+import HomeCategory from "./HomeCategory";
+import LocationSelector from "./LocationSelector";
 
-const CategoryPage = () => {
+const HomePage = () => {
   const bottomSheetRef = React.useRef(null);
   const selectedAddress = useSelector((state) => state.address.title);
   const dispatch = useDispatch();
+
   const handleBottomBar = () => {
     bottomSheetRef.current?.expand();
   };
@@ -21,18 +21,21 @@ const CategoryPage = () => {
     dispatch(setAddress(title));
     bottomSheetRef.current?.close();
   };
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView className="bg-gray-100">
+      <ScrollView style={styles.content}>
         <View style={styles.addressContainer}>
           <Address
             handleBottomBar={handleBottomBar}
             address={selectedAddress}
           />
         </View>
-        {data.map((item, index) => (
-          <Category key={item.id || index} categories={item.categories || []} />
-        ))}
+        <View style={styles.categoriesContainer}>
+          {data.map((item) => (
+            <HomeCategory key={item.categories.id} category={item.categories} />
+          ))}
+        </View>
       </ScrollView>
       <LocationSelector
         ref={bottomSheetRef}
@@ -47,10 +50,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#4ade80",
   },
+  content: {
+    flex: 1,
+    backgroundColor: "white",
+  },
   addressContainer: {
     backgroundColor: "#4ade80",
     paddingVertical: 16,
   },
+  categoriesContainer: {
+    backgroundColor: "#e5e7eb",
+    marginTop: 4,
+  },
 });
 
-export default CategoryPage;
+export default HomePage;

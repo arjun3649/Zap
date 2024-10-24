@@ -1,15 +1,18 @@
 import { Ionicons } from "@expo/vector-icons";
 import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import React, { forwardRef, useMemo, useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { forwardRef, useMemo } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import address from "../Utils/AddressList";
 import AddressItem from "./AddressItem";
 
-const LocationSelector = forwardRef(({onAddressselect}, ref) => {
+const LocationSelector = forwardRef(({ onAddressSelect }, ref) => {
   const snapPoints = useMemo(() => ["25%", "50%", "75%", "90%"], []);
-  
-
-  function setlocation() {}
 
   return (
     <BottomSheet
@@ -17,47 +20,107 @@ const LocationSelector = forwardRef(({onAddressselect}, ref) => {
       snapPoints={snapPoints}
       enablePanDownToClose={true}
       index={-1}
-      className="shadow-lg "
+      style={styles.bottomSheet}
     >
-      <View className="flex-1 p-4 bg-gray-50">
-        <Text className="text-xl font-bold mb-4">Select location</Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Select location</Text>
 
-        <View className="flex-row items-center bg-gray-100 rounded-lg px-3 mb-4">
-          <Ionicons name="search" size={20} color="#888" className="mr-2" />
+        <View style={styles.searchContainer}>
+          <Ionicons
+            name="search"
+            size={20}
+            color="#888"
+            style={styles.searchIcon}
+          />
           <TextInput
-            className="flex-1 h-10 text-base"
+            style={styles.searchInput}
             placeholder="Search for area, street name..."
             placeholderTextColor="#888"
           />
         </View>
 
-        <TouchableOpacity className="flex-row items-center bg-gray-100 rounded-lg p-3 mb-4">
+        <TouchableOpacity style={styles.currentLocationButton}>
           <Ionicons name="locate" size={20} color="#4CAF50" />
-          <Text className="flex-1 ml-2 text-green-600 font-bold">
-            Go to current location
-          </Text>
+          <Text style={styles.currentLocationText}>Go to current location</Text>
           <Ionicons name="chevron-forward" size={20} color="#888" />
         </TouchableOpacity>
 
-        <Text className="text-base font-bold text-gray-600 mb-3">
-          Your saved addresses
-        </Text>
+        <Text style={styles.savedAddressesTitle}>Your saved addresses</Text>
 
         <BottomSheetScrollView>
-          {address.map((map) => (
+          {address.map((item) => (
             <AddressItem
-              key={map.id}
-              type={map.type}
-              title={map.title}
-              distance={map.distance}
-              address={map.address}
-              handleclick={()=>onAddressselect(map.address)}
+              key={item.id}
+              type={item.type}
+              title={item.title}
+              distance={item.distance}
+              address={item.address}
+              handleclick={() => onAddressSelect(item.address)}
             />
           ))}
         </BottomSheetScrollView>
       </View>
     </BottomSheet>
   );
+});
+
+const styles = StyleSheet.create({
+  bottomSheet: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: "#fafafa",
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f3f4f6",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+  },
+  searchIcon: {
+    marginRight: 8,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+  },
+  currentLocationButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#f3f4f6",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 16,
+  },
+  currentLocationText: {
+    flex: 1,
+    marginLeft: 8,
+    color: "#4CAF50",
+    fontWeight: "bold",
+  },
+  savedAddressesTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#4b5563",
+    marginBottom: 12,
+  },
 });
 
 export default LocationSelector;

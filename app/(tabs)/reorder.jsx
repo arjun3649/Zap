@@ -1,37 +1,40 @@
-import { router } from "expo-router";
-import React, { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import Address from "../../components/Address";
 import LocationSelector from "../../components/LocationSelector";
-import "/home/rio/Documents/projects/DelieveryApp/global.css";
+import "../../global.css";
+import { setAddress } from "../../Redux/addressSlice";
 
 const reorder = () => {
-  const bottomSheetRef = useRef();
+  const bottomSheetRef = React.useRef(null);
+  const selectedAddress = useSelector((state) => state.address.title);
+  const dispatch = useDispatch();
 
-  const [selectedAddress, setSelectedAddress] = useState("Select Location");
-
-  function handleBottomBar() {
+  const handleBottomBar = () => {
     bottomSheetRef.current?.expand();
-  }
+  };
 
-  function handleAddressSelect(title) {
-    setSelectedAddress(title);
+  const handleAddressSelect = (title) => {
+    dispatch(setAddress(title));
     bottomSheetRef.current?.close();
-  }
-  function handleProfile() {
-    router.navigate("/profile");
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <View className="flex-1 bg-green-400"></View>
-        <View className="flex-1 bg-blue-400"></View>
-        <View className="flex-1 bg-blue-300"></View>
-      </View>
+      <ScrollView style={styles.content}>
+        <View style={styles.addressContainer}>
+          <Address
+            handleBottomBar={handleBottomBar}
+            address={selectedAddress}
+          />
+        </View>
+        <View className="flex-1 bg-black"></View>
+      </ScrollView>
       <LocationSelector
         ref={bottomSheetRef}
-        onAddressselect={handleAddressSelect}
+        onAddressSelect={handleAddressSelect}
       />
     </SafeAreaView>
   );
@@ -44,6 +47,15 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    backgroundColor: "white",
+  },
+  addressContainer: {
+    backgroundColor: "#4ade80",
+    paddingVertical: 16,
+  },
+  categoriesContainer: {
+    backgroundColor: "#e5e7eb",
+    marginTop: 4,
   },
 });
 
